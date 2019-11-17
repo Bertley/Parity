@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # requirements 
-    'django_seed',
+    # requirements
+    'field_history',
     # my app
-    'core', 
+    'core',
 
 ]
 
@@ -50,8 +50,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'crequest.middleware.CrequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 ]
 
 ROOT_URLCONF = 'paritygo.urls'
