@@ -50,13 +50,6 @@ class RoomLight(models.Model):
         return "Room light {0}".format(str(self.id))
 
 
-class RoomLightStateAudit(models.Model):
-    room_light = models.UUIDField(null=False, blank=False)
-    start_state = models.TextField(null=False, blank=False)
-    end_state = models.TextField(null=False, blank=False)
-    datetime = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-
 class Sensor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     label = models.CharField(max_length=255)
