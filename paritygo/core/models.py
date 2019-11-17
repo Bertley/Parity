@@ -65,35 +65,31 @@ class RoomSensor(models.Model):
     room = models.ForeignKey('HouseRoom', on_delete=models.CASCADE)
     sensor = models.ForeignKey('Sensor', on_delete=models.CASCADE)
     value = models.FloatField(null=False, blank=False, default=0)
-    field_history = FieldHistoryTracker(['value', 'sensor'])
+    field_history = FieldHistoryTracker(['value'])
 
     def __str__(self):
         return "Room sensor {0}".format(str(self.id))
 
-
-class Thermostat(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    label = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.label
-
-
-class ThermostatMode(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    label = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.label
-
-
 class HouseThermostat(models.Model):
+      # Declare status
+    MODE_OFF = 0
+    MODE_COOL = 1
+    MODE_HEAT = 2
+    MODE_FAN_ON = 3
+    MODE_AUTO = 4
+    MODE_CHOICES = (
+        (MODE_OFF, 'off'),
+        (MODE_COOL, 'cool'),
+        (MODE_HEAT, 'heat'),
+        (MODE_FAN_ON, 'fan-on'),
+        (MODE_AUTO, 'auto')
+    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    thermostat = models.ForeignKey('Thermostat', on_delete=models.CASCADE)
     house = models.ForeignKey('House', on_delete=models.CASCADE)
-    mode = models.ForeignKey('ThermostatMode', on_delete=models.CASCADE)
+    mode = FSMIntegerField(choices=MODE_CHOICES, default=MODE_OFF)
 
     field_history = FieldHistoryTracker(['mode'])
 
     def __str__(self):
-        return self.id
+        return "{0}".format(str(self.id))
+
